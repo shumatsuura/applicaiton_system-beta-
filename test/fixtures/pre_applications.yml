@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  genre: MyString
+  item: MyString
+  description: MyText
+  amount: 1
+
+two:
+  user: two
+  genre: MyString
+  item: MyString
+  description: MyText
+  amount: 1

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ApplicationSystem</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= link_to "ユーザー一覧",users_path %>
+    <%= link_to "申請一覧",pre_applications_path %>
+    <%= link_to "承認待ち一覧",approvals_path %>
+    <%= link_to "ログイン", new_user_session_path %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    <%= current_user.name if current_user %>としてログイン中
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<%= form_with(model: pre_application, local: true) do |form| %>
+  <% if pre_application.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pre_application.errors.count, "error") %> prohibited this pre_application from being saved:</h2>
+
+      <ul>
+      <% pre_application.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    申請者:
+    <%= @user.name %>
+    <%= form.hidden_field :user_id, :value => @user.id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :genre %>
+    <%= form.select :genre,["基本","契約","財務","人事"] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.select :item,[
+    "押印（社長印）",
+    "経費（50万円以上）",
+    "経費（10万円以上50万円未満）",
+    "経費（10万円未満）",
+    "重要な契約",
+    "プロジェクト予算事前申請",
+    "プロジェクト予算執行",
+    ] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

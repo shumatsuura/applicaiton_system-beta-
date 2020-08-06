@@ -1,0 +1,34 @@
+<h1>報告一覧</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <td>No.</td>
+      <td>申請者</td>
+      <td>ジャンル</td>
+      <td>項目</td>
+      <td>説明</td>
+    </tr>
+  </thead>
+
+<% @reports.each do |reports| %>
+<tr>
+  <td>
+    <%= report.pre_application.id %>
+  </td>
+  <td>
+    <%= report.pre_application.user.name %>
+  </td>
+  <td>
+    <%= report.pre_application.genre %>
+  </td>
+  <td>
+    <%= report.pre_application.item %>
+  </td>
+  <td>
+    <%= report.pre_application.description %>
+  </td>
+</tr>
+<% end %>
+
+</table>

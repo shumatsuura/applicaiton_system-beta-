@@ -1,0 +1,51 @@
+<h1>承認待ち申請一覧</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <td>No.</td>
+      <td>申請者</td>
+      <td>ジャンル</td>
+      <td>項目</td>
+      <td>説明</td>
+      <td>承認者</td>
+      <td>承認状況</td>
+      <td></td>
+      <td></td>
+
+    </tr>
+  </thead>
+
+<% @approvals.each do |approval| %>
+<tr>
+  <td>
+    <%= approval.pre_application.id %>
+  </td>
+  <td>
+    <%= approval.pre_application.user.name %>
+  </td>
+  <td>
+    <%= approval.pre_application.genre %>
+  </td>
+  <td>
+    <%= approval.pre_application.item %>
+  </td>
+  <td>
+    <%= approval.pre_application.description %>
+  </td>
+  <td>
+    <%= approval.user.name %>
+  </td>
+  <td>
+    <%= approval.judge == nil ? "未承認" : approval.judge %>
+  </td>
+  <td>
+    <%= link_to "承認する", approval_path(approval,approval:{judge: true}),method: :put %>
+  </td>
+  <td>
+    <%= link_to "否認する", approval_path(approval,approval:{judge: false}),method: :put %>
+  </td>
+</tr>
+<% end %>
+
+</table>

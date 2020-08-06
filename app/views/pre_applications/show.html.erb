@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @pre_application.user.name %>
+</p>
+
+<p>
+  <strong>Genre:</strong>
+  <%= @pre_application.genre %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @pre_application.item %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @pre_application.description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @pre_application.amount %>
+</p>
+
+<%= link_to 'Edit', edit_pre_application_path(@pre_application) %> |
+<%= link_to 'Back', pre_applications_path %>

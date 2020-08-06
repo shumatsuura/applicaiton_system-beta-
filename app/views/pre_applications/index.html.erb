@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>申請一覧</h1>
+
+<table border="1" style="border-collapse: collapse">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>User</th>
+      <th>Genre</th>
+      <th>Item</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th colspan="3"></th>
+      <th>承認者1</th>
+      <th>承認者1状況</th>
+      <th>承認者2</th>
+      <th>承認者2状況</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pre_applications.each do |pre_application| %>
+      <tr>
+        <td><%= pre_application.id %></td>
+        <td><%= pre_application.user.name %></td>
+        <td><%= pre_application.genre %></td>
+        <td><%= pre_application.item %></td>
+        <td><%= pre_application.description %></td>
+        <td><%= pre_application.amount %></td>
+        <td><%= link_to 'Show', pre_application %></td>
+        <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
+        <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% pre_application.approvals.each do |approval| %>
+        <td><%= approval.user.name %></td>
+        <td><%= approval.judge == nil ? "未承認" : approval.judge %></td>
+        <% end %>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pre Application', new_pre_application_path %>
