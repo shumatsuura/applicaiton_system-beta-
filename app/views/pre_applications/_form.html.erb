@@ -1,69 +1,72 @@
-<%= form_with(model: pre_application, local: true) do |form| %>
-  <% if pre_application.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pre_application.errors.count, "error") %> prohibited this pre_application from being saved:</h2>
+<div class="container">
+  <%= form_with(model: pre_application, local: true) do |form| %>
+    <% if pre_application.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(pre_application.errors.count, "error") %> prohibited this pre_application from being saved:</h2>
 
-      <ul>
-      <% pre_application.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <ul>
+        <% pre_application.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      申請者:
+      <% case controller.action_name %>
+        <% when "new" %>
+          <%= current_user.name %>
+          <%= form.hidden_field :user_id, :value => current_user.id %>
+        <% when "edit" %>
+          <%= @pre_application.user.name %>
       <% end %>
-      </ul>
+    </div>
+
+    <div class="field form-group">
+      <%= form.label :genre %>
+      <%= form.select :genre,["基本","契約","財務","人事"],{},class: "form-control" %>
+    </div>
+
+    <div class="form-group field">
+      <%= form.label :item %>
+      <%= form.select :item,[
+      "押印（社長印）",
+      "経費（50万円以上）",
+      "経費（10万円以上50万円未満）",
+      "経費（10万円未満）",
+      "重要な契約",
+      "プロジェクト予算事前申請",
+      "プロジェクト予算執行",
+      ],{},class: "form-control" %>
+    </div>
+
+    <div class="form-group field">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+
+    <div class="form-group field">
+      <%= form.label :amount %>
+      <%= form.number_field :amount, class: "form-control" %>
+    </div>
+
+    <div class="form-group field">
+      <%= form.label :attached_file %>
+      <%= form.file_field :attached_files, multiple: true,class:"form-control" %>
+    </div>
+
+    <h5>承認者設定</h5>
+    <div class="form-group approvals">
+      <%= form.fields_for :approvals do |builder| %>
+      <%= render 'pre_applications/approval_fields', form: builder %>
+      <% end %>
+      <%= link_to_add_fields "承認者追加", form, :approvals %>
+    </div>
+
+
+    <div class="actions">
+      <%= form.submit "申請", class: "btn btn-secondary" %>
     </div>
   <% end %>
-
-  <div class="field">
-    申請者:
-    <% case controller.action_name %>
-      <% when "new" %>
-        <%= current_user.name %>
-        <%= form.hidden_field :user_id, :value => current_user.id %>
-      <% when "edit" %>
-        <%= @pre_application.user.name %>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= form.label :genre %>
-    <%= form.select :genre,["基本","契約","財務","人事"] %>
-  </div>
-
-  <div class="field">
-    <%= form.label :item %>
-    <%= form.select :item,[
-    "押印（社長印）",
-    "経費（50万円以上）",
-    "経費（10万円以上50万円未満）",
-    "経費（10万円未満）",
-    "重要な契約",
-    "プロジェクト予算事前申請",
-    "プロジェクト予算執行",
-    ] %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.number_field :amount %>
-  </div>
-
-  <div class="field">
-    <%= form.label :attached_file %>
-    <%= form.file_field :attached_files, multiple: true %>
-  </div>
-
-  <div class="form-group approvals">
-    <%= form.fields_for :approvals do |builder| %>
-    <%= render 'pre_applications/approval_fields', form: builder %>
-    <% end %>
-    <%= link_to_add_fields "Add Approver Field", form, :approvals %>
-  </div>
-
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

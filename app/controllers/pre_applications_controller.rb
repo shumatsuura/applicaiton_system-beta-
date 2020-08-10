@@ -3,29 +3,24 @@ class PreApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_editer, only: [:edit, :update, :destroy]
 
-  # GET /pre_applications
-  # GET /pre_applications.json
+  PER = 10
+
   def index
-    @pre_applications = PreApplication.all.order(created_at: "DESC").limit(30)
+    @q = PreApplication.order(updated_at: "DESC").ransack(params[:q])
+    @pre_applications = @q.result(distinct: true).page(params[:page]).per(PER)
   end
 
-  # GET /pre_applications/1
-  # GET /pre_applications/1.json
   def show
   end
 
-  # GET /pre_applications/new
   def new
     @pre_application = PreApplication.new
     @pre_application.approvals.build
   end
 
-  # GET /pre_applications/1/edit
   def edit
   end
 
-  # POST /pre_applications
-  # POST /pre_applications.json
   def create
     @pre_application = PreApplication.new(pre_application_params)
 
@@ -40,8 +35,6 @@ class PreApplicationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /pre_applications/1
-  # PATCH/PUT /pre_applications/1.json
   def update
     respond_to do |format|
       if @pre_application.update(pre_application_params)
@@ -54,8 +47,6 @@ class PreApplicationsController < ApplicationController
     end
   end
 
-  # DELETE /pre_applications/1
-  # DELETE /pre_applications/1.json
   def destroy
     @pre_application.destroy
     respond_to do |format|

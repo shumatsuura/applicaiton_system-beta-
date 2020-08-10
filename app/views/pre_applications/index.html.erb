@@ -1,15 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div>
+    <%= search_form_for @q do |f| %>
+      <div class="form-inline form-group col-auto">
+        <%= f.label :user_name_or_genre_or_item_or_approvals_user_name_cont, "Key Word", class: "col-sm-1 col-form-label" %>
+          <%= f.search_field :user_name_or_genre_or_item_or_approvals_user_name_cont,
+          {class: "form-control", placeholder: "Search"} %>
+          <%= f.label :approvals_judge_eq, "承認ステータス", class: "col-sm-2 col-form-label" %>
+          <%= f.select :approvals_judge_eq,[true,false,nil],{include_blank: true},class: "form-control" %>
+      </div>
+      <div class="form-group text-right">
+        <%= f.submit "Search", class: "btn btn-success my-2 my-sm-0" %>
+      </div>
+    <% end %>
+  </div>
 
 <h1>申請一覧</h1>
+<%= paginate @pre_applications %>
 <table class='table table-bordered'>
   <thead class="thead-dark"'>
     <tr>
-      <th>No.</th>
+      <th><%= sort_link(@q, :id,"No.",{}, class:"text-light")%></th>
       <th>申請者</th>
       <th>分野</th>
       <th>申請事項</th>
       <th>説明</th>
-      <th>金額</th>
+      <th><%= sort_link(@q, :amount,"金額",{}, class:"text-light")%></th>
       <th>承認者1</th>
       <th>承認者1状況</th>
       <th>承認者2</th>
@@ -70,3 +85,4 @@
 <br>
 
 <%= link_to 'New Pre Application', new_pre_application_path %>
+</div>
