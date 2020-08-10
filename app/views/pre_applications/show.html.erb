@@ -24,6 +24,12 @@
   <strong>Amount:</strong>
   <%= @pre_application.amount %>
 </p>
+<p>
+  <strong>添付ファイル</strong>
+  <% @pre_application.attached_files.each do |attached_file| %>
+    <%= link_to "#{attached_file.filename}", rails_blob_path(attached_file) %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_pre_application_path(@pre_application) %> |
 <%= link_to 'Back', pre_applications_path %>

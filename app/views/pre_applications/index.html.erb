@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>申請一覧</h1>
-
-<table border="1" style="border-collapse: collapse">
-  <thead>
+<table class='table table-bordered'>
+  <thead class="thead-dark"'>
     <tr>
       <th>No.</th>
       <th>User</th>
@@ -16,13 +15,14 @@
       <th>承認者1状況</th>
       <th>承認者2</th>
       <th>承認者2状況</th>
+      <th>全体承認ステータス</th>
     </tr>
   </thead>
 
   <tbody>
     <% @pre_applications.each do |pre_application| %>
       <tr>
-        <td><%= pre_application.id %></td>
+        <td><%= link_to pre_application.id, pre_application_path(pre_application) %></td>
         <td><%= pre_application.user.name %></td>
         <td><%= pre_application.genre %></td>
         <td><%= pre_application.item %></td>
@@ -32,10 +32,34 @@
         <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
         <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
+        <% n = 0 %>
+        <% k = 0 %>
         <% pre_application.approvals.each do |approval| %>
-        <td><%= approval.user.name %></td>
-        <td><%= approval.judge == nil ? "未承認" : approval.judge %></td>
+          <td><%= approval.user.name %></td>
+          <td><%= approval.judge == nil ? "未承認" : approval.judge %></td>
+
+          <% if approval.judge == nil %>
+            <% n += 1 %>
+          <% elsif approval.judge == false %>
+            <% n += 1 %>
+          <% end %>
+          <% k += 1 %>
         <% end %>
+
+        <% case k %>
+          <% when 0 %>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% when 1 %>
+            <td></td>
+            <td></td>
+        <% end %>
+
+        <td>
+          <%= n == 0 ? "承認済" : "未承認" %>
+        </td>
 
       </tr>
     <% end %>

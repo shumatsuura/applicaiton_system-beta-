@@ -13,8 +13,13 @@
 
   <div class="field">
     申請者:
-    <%= @user.name %>
-    <%= form.hidden_field :user_id, :value => @user.id %>
+    <% case controller.action_name %>
+      <% when "new" %>
+        <%= current_user.name %>
+        <%= form.hidden_field :user_id, :value => current_user.id %>
+      <% when "edit" %>
+        <%= @pre_application.user.name %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -44,6 +49,17 @@
     <%= form.label :amount %>
     <%= form.number_field :amount %>
   </div>
+
+  <div class="field">
+    <%= form.label :attached_file %>
+    <%= form.file_field :attached_files, multiple: true %>
+  </div>
+
+  <%= form.fields_for :approvals do |approval_form| %>
+    <h3>承認者情報<%= approval_form.index + 1 %></h3>
+    <%= approval_form.label :name %>
+    <%= approval_form.number_field :user_id %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
