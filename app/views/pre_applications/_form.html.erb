@@ -55,11 +55,13 @@
     <%= form.file_field :attached_files, multiple: true %>
   </div>
 
-  <%= form.fields_for :approvals do |approval_form| %>
-    <h3>承認者情報<%= approval_form.index + 1 %></h3>
-    <%= approval_form.label :name %>
-    <%= approval_form.number_field :user_id %>
-  <% end %>
+  <div class="form-group approvals">
+    <%= form.fields_for :approvals do |builder| %>
+    <%= render 'pre_applications/approval_fields', form: builder %>
+    <% end %>
+    <%= link_to_add_fields "Add Approver Field", form, :approvals %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>

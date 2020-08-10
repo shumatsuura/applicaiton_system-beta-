@@ -72,7 +72,9 @@ class PreApplicationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pre_application_params
-      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount, approvals_attributes: [:id, :user_id], attached_files: [])
+      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount,
+        approvals_attributes: [:id, :user_id, :_destroy],
+        attached_files: [])
     end
 
     def authenticate_editer

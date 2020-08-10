@@ -1,0 +1,15 @@
+<fieldset>
+  <div class="border rounded bg-light p-2 form-group">
+  <h5>Approver<span class="approver_index"><%= form.index + 1 %><span></h5>
+    <div class="form-row">
+      <div class="col-auto">
+        <%= form.label :name %>
+        <%= form.select :user_id, User.select(:id,:name).map{ |n| [n.name.to_sym,n.id]}.to_h,{include_blank: true} %>
+      </div>
+    </div>
+  <div class="text-right">
+    <%= form.hidden_field :_destroy %>
+    <%= link_to "Delete", '#', class: "remove_fields btn btn-danger btn-sm" %>
+  </div>
+  </div>
+</fieldset>
