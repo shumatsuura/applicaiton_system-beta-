@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
+  <strong>申請者:</strong>
   <%= @pre_application.user.name %>
 </p>
 
@@ -28,6 +28,14 @@
   <strong>添付ファイル</strong>
   <% @pre_application.attached_files.each do |attached_file| %>
     <%= link_to "#{attached_file.filename}", rails_blob_path(attached_file) %>
+  <% end %>
+</p>
+<p>
+  <h6>承認状況</h6>
+  <% @pre_application.approvals.each_with_index do |approval,i| %>
+    承認者<%= i + 1 %>
+    <%= approval.user.name %>
+    <%= approval.judge == nil ? "未承認" : approval.judge %>
   <% end %>
 </p>
 

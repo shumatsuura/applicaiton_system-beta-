@@ -5,17 +5,17 @@
   <thead class="thead-dark"'>
     <tr>
       <th>No.</th>
-      <th>User</th>
+      <th>申請者</th>
       <th>Genre</th>
       <th>Item</th>
       <th>Description</th>
       <th>Amount</th>
-      <th colspan="3"></th>
       <th>承認者1</th>
       <th>承認者1状況</th>
       <th>承認者2</th>
       <th>承認者2状況</th>
       <th>全体承認ステータス</th>
+      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -28,9 +28,6 @@
         <td><%= pre_application.item %></td>
         <td><%= pre_application.description %></td>
         <td><%= pre_application.amount %></td>
-        <td><%= link_to 'Show', pre_application %></td>
-        <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
-        <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
         <% n = 0 %>
         <% k = 0 %>
@@ -60,6 +57,10 @@
         <td>
           <%= n == 0 ? "承認済" : "未承認" %>
         </td>
+
+        <td><%= link_to 'Show', pre_application %></td>
+        <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
+        <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
       </tr>
     <% end %>

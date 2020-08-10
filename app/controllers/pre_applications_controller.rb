@@ -1,5 +1,7 @@
 class PreApplicationsController < ApplicationController
   before_action :set_pre_application, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :authenticate_editer, only: [:edit, :update, :destroy]
 
   # GET /pre_applications
   # GET /pre_applications.json
@@ -15,7 +17,6 @@ class PreApplicationsController < ApplicationController
   # GET /pre_applications/new
   def new
     @pre_application = PreApplication.new
-    @user = current_user
     @pre_application.approvals.build
   end
 
@@ -72,5 +73,11 @@ class PreApplicationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def pre_application_params
       params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount, approvals_attributes: [:id, :user_id], attached_files: [])
+    end
+
+    def authenticate_editer
+      if current_user != @pre_application.user
+        redirect_to pre_applications_path, notice: "権限がありません。"
+      end
     end
 end

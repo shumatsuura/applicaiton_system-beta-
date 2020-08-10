@@ -13,9 +13,11 @@
     <%= link_to "ユーザー一覧",users_path %>
     <%= link_to "申請一覧",pre_applications_path %>
     <%= link_to "承認待ち一覧",approvals_path %>
-    <%= link_to "ログイン", new_user_session_path %>
-    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <%= current_user.name if current_user %>としてログイン中
+
+    <%= user_signed_in? ? "#{current_user.name}としてログイン中" : "未ログイン" %>
+    <%= link_to "ログイン", new_user_session_path if not user_signed_in? %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete if user_signed_in?%>
+    <p id="notice"><%= notice %></p>
     <%= yield %>
   </body>
 </html>
