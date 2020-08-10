@@ -16,6 +16,7 @@ class PreApplicationsController < ApplicationController
   def new
     @pre_application = PreApplication.new
     @user = current_user
+    @pre_application.approvals.build
   end
 
   # GET /pre_applications/1/edit
@@ -26,9 +27,6 @@ class PreApplicationsController < ApplicationController
   # POST /pre_applications.json
   def create
     @pre_application = PreApplication.new(pre_application_params)
-    @pre_application.approvals.build(user_id: (1..30).to_a.sample, pre_application_id: @pre_application.id )
-    @pre_application.approvals.build(user_id: (1..30).to_a.sample, pre_application_id: @pre_application.id )
-    @pre_application.reports.build(user_id: (1..30).to_a.sample, pre_application_id: @pre_application.id )
 
     respond_to do |format|
       if @pre_application.save
@@ -73,6 +71,6 @@ class PreApplicationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pre_application_params
-      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount)
+      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount, approvals_attributes: [:id, :user_id])
     end
 end

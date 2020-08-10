@@ -45,6 +45,12 @@
     <%= form.number_field :amount %>
   </div>
 
+  <%= form.fields_for :approvals do |approval_form| %>
+    <h3>承認者情報<%= approval_form.index + 1 %></h3>
+    <%= approval_form.label :name %>
+    <%= approval_form.number_field :user_id %>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
