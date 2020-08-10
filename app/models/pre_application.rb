@@ -3,4 +3,6 @@ class PreApplication < ApplicationRecord
   has_many :approvals
   accepts_nested_attributes_for :approvals
   has_many :reports
+
+  has_many_attached :attached_files
 end

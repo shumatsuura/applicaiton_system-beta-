@@ -4,7 +4,7 @@ class PreApplicationsController < ApplicationController
   # GET /pre_applications
   # GET /pre_applications.json
   def index
-    @pre_applications = PreApplication.all
+    @pre_applications = PreApplication.all.order(created_at: "DESC").limit(30)
   end
 
   # GET /pre_applications/1
@@ -71,6 +71,6 @@ class PreApplicationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pre_application_params
-      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount, approvals_attributes: [:id, :user_id])
+      params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount, approvals_attributes: [:id, :user_id], attached_files: [])
     end
 end
