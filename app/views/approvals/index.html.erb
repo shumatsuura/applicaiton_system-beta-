@@ -1,51 +1,57 @@
-<h1>承認一覧</h1>
+<div class="container-fluid">
+  <h1>承認一覧</h1>
 
-<table class='table table-bordered'>
-  <thead class="thead-dark"'>
-    <tr>
-      <th>申請No.</th>
-      <th>申請者</th>
-      <th>ジャンル</th>
-      <th>項目</th>
-      <th>説明</th>
-      <th>承認者</th>
-      <th>承認状況</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+  <table class='table table-bordered'>
+    <thead class="thead-dark"'>
+      <tr>
+        <th>申請No.</th>
+        <th>申請者</th>
+        <th>ジャンル</th>
+        <th>項目</th>
+        <th>説明</th>
+        <th colspan="2">操作</th>
+        <th>他の承認者</th>
+        <th>他の承認状況</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% @approvals.each do |approval| %>
-    <tr>
-      <td>
-          <%= link_to approval.pre_application.id, pre_application_path(approval.pre_application.id) %>
-      </td>
-      <td>
-        <%= approval.pre_application.user.name %>
-      </td>
-      <td>
-        <%= approval.pre_application.genre %>
-      </td>
-      <td>
-        <%= approval.pre_application.item %>
-      </td>
-      <td>
-        <%= approval.pre_application.description %>
-      </td>
-      <td>
-        <%= approval.user.name %>
-      </td>
-      <td>
-        <%= approval.judge == nil ? "未承認" : approval.judge %>
-      </td>
-      <td>
-        <%= link_to "承認する", approval_path(approval,approval:{judge: true}),method: :put if approval.user == current_user %>
-      </td>
-      <td>
-        <%= link_to "否認する", approval_path(approval,approval:{judge: false}),method: :put if approval.user == current_user %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    <tbody>
+      <% @approvals.each do |approval| %>
+        <tr>
+          <td>
+              <%= link_to approval.pre_application.id, pre_application_path(approval.pre_application.id) %>
+          </td>
+          <td>
+            <%= approval.pre_application.user.name %>
+          </td>
+          <td>
+            <%= approval.pre_application.genre %>
+          </td>
+          <td>
+            <%= approval.pre_application.item %>
+          </td>
+          <td>
+            <%= approval.pre_application.description %>
+          </td>
+          <td>
+            <%= link_to "承認する", approval_path(approval,approval:{judge: true}),method: :put if (approval.user == current_user) && (approval.judge == nil) %>
+            <%= approval.judge if approval.judge != nil %>
+          </td>
+          <td>
+            <%= link_to "否認する", approval_path(approval,approval:{judge: false}),method: :put if approval.user == current_user && (approval.judge == nil) %>
+          </td>
+          <% approval.pre_application.approvals.each do |approver| %>
+            <% if approver.user != current_user %>
+              <td>
+                <%= approver.user.name %>
+              </td>
+              <td>
+                <%= approver.judge == nil ? "未承認" : approver.judge %>
+              </td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

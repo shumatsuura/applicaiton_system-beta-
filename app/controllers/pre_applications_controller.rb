@@ -6,7 +6,8 @@ class PreApplicationsController < ApplicationController
   PER = 10
 
   def index
-    @q = PreApplication.order(updated_at: "DESC").ransack(params[:q])
+    @q = PreApplication.where(user_id: current_user.id).order(updated_at: "DESC").ransack(params[:q])
+    # @q = PreApplication.order(updated_at: "DESC").ransack(params[:q])
     @pre_applications = @q.result(distinct: true).page(params[:page]).per(PER)
   end
 
@@ -20,6 +21,15 @@ class PreApplicationsController < ApplicationController
   end
 
   def edit
+    n = 0
+    @pre_application.approvals.each do |approval|
+      if approval.judge != nil
+        n +=1
+      end
+    end
+    if n != 0
+      redirect_to @pre_application, notice: "既に承認者が操作済みのため編集できません。"
+    end
   end
 
   def create
@@ -50,10 +60,21 @@ class PreApplicationsController < ApplicationController
   end
 
   def destroy
-    @pre_application.destroy
-    respond_to do |format|
-      format.html { redirect_to pre_applications_url, notice: 'Pre application was successfully destroyed.' }
-      format.json { head :no_content }
+    n = 0
+    @pre_application.approvals.each do |approval|
+      if approval.judge != nil
+        n +=1
+      end
+    end
+
+    if n != 0
+      redirect_to @pre_application, notice: "既に承認者が操作済みのため削除できません。"
+    else
+      @pre_application.destroy
+      respond_to do |format|
+        format.html { redirect_to pre_applications_url, notice: 'Pre application was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -66,7 +87,7 @@ class PreApplicationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def pre_application_params
       params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount,
-        approvals_attributes: [:id, :user_id, :_destroy],
+        approvals_attributes: [:id, :user_id,:order, :_destroy],
         reports_attributes: [:id, :user_id, :_destroy],
         attached_files: [])
     end
