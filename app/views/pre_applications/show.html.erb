@@ -38,6 +38,15 @@
     <%= approval.judge == nil ? "未承認" : approval.judge %>
   <% end %>
 </p>
+<p>
+  <% if @pre_application.reports %>
+    <h6>報告先</h6>
+    <% @pre_application.reports.each_with_index do |report,i| %>
+      承認者<%= i + 1 %>
+      <%= report.user.name %>
+    <% end %>
+  <% end %>
+</p>
 
-<%= link_to 'Edit', edit_pre_application_path(@pre_application) %> |
+<%= link_to 'Edit', edit_pre_application_path(@pre_application) %>
 <%= link_to 'Back', pre_applications_path %>

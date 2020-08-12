@@ -16,6 +16,7 @@ class PreApplicationsController < ApplicationController
   def new
     @pre_application = PreApplication.new
     @pre_application.approvals.build
+    @pre_application.reports.build
   end
 
   def edit
@@ -66,6 +67,7 @@ class PreApplicationsController < ApplicationController
     def pre_application_params
       params.require(:pre_application).permit(:user_id, :genre, :item, :description, :amount,
         approvals_attributes: [:id, :user_id, :_destroy],
+        reports_attributes: [:id, :user_id, :_destroy],
         attached_files: [])
     end
 

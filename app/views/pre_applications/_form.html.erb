@@ -64,6 +64,14 @@
       <%= link_to_add_fields "承認者追加", form, :approvals %>
     </div>
 
+    <h5>報告先設定</h5>
+    <div class="form-group reports">
+      <%= form.fields_for :reports do |builder| %>
+      <%= render 'pre_applications/report_fields', form: builder %>
+      <% end %>
+      <%= link_to_add_fields "承認者追加", form, :reports %>
+    </div>
+
 
     <div class="actions">
       <%= form.submit "申請", class: "btn btn-secondary" %>

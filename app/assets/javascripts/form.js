@@ -7,7 +7,6 @@ $(document).on('turbolinks:load', function(){
 
   $('form').on('click', '.add_fields', function(event){
     approver_index = Number($(this).parent().find('.approver_index:last').text()) + 1
-    // education_index = Number($('.educations_index:last').text()) + 1;
 
     var time = new Date().getTime();
     var regexp = new RegExp($(this).data('id'), 'g');
