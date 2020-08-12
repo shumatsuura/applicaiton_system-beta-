@@ -4,4 +4,5 @@ class PreApplication < ApplicationRecord
   accepts_nested_attributes_for :approvals, allow_destroy: true
   has_many :reports
   has_many_attached :attached_files
+  has_many :overall_approvals
 end

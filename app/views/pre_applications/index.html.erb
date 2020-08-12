@@ -44,17 +44,11 @@
         <td><%= pre_application.description %></td>
         <td><%= pre_application.amount %></td>
 
-        <% n = 0 %>
         <% k = 0 %>
         <% pre_application.approvals.each do |approval| %>
           <td><%= approval.user.name %></td>
           <td><%= approval.judge == nil ? "未承認" : approval.judge %></td>
 
-          <% if approval.judge == nil %>
-            <% n += 1 %>
-          <% elsif approval.judge == false %>
-            <% n += 1 %>
-          <% end %>
           <% k += 1 %>
         <% end %>
 
@@ -70,7 +64,7 @@
         <% end %>
 
         <td>
-          <%= n == 0 ? "承認済" : "未承認" %>
+          <%= pre_application.overall_approvals.first.status if pre_application.overall_approvals.first %>
         </td>
 
         <td><%= link_to 'Show', pre_application %></td>

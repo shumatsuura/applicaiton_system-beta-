@@ -23,4 +23,5 @@
       description: Faker::Lorem.sentence,
       amount: (3000..1000000).to_a.sample,)
   a.approvals.create(user_id: User.ids.sample(1).first)
+  a.overall_approvals.create()
 end

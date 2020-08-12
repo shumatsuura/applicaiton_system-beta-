@@ -26,6 +26,7 @@ class PreApplicationsController < ApplicationController
 
     respond_to do |format|
       if @pre_application.save
+        @pre_application.overall_approvals.create()
         format.html { redirect_to @pre_application, notice: 'Pre application was successfully created.' }
         format.json { render :show, status: :created, location: @pre_application }
       else
