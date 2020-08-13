@@ -12,5 +12,18 @@ Rails.application.routes.draw do
     :sessions => 'users/sessions'
     }
   resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # namespace :admin do
+  #   resources :users do
+  #     collection do
+  #       get :dashboard
+  #     end
+  #   end
+  #
+  #   resources :pre_applications, only:[] do
+  #     collection do
+  #       get :index_all
+  #     end
+  #   end
+  # end
 end

@@ -46,12 +46,18 @@ class PreApplicationsController < ApplicationController
           ENV['WEBHOOK_URL'],
           channel: '#' + ENV['CHANNEL']
         )
-        notifier.ping "新規申請がありました。
-        承認者は<@UU5GXJ9MX>です。<#{pre_application_url(@pre_application)}|ここ>にアクセスして承認してください。
-        分野：#{@pre_application.genre},
-        項目：#{@pre_application.item}
-        "
+        approver1 = "<@" + @pre_application.approvals.first.user.slack_member_id + ">" if @pre_application.approvals.first
+        approver2 = "<@" + @pre_application.approvals.second.user.slack_member_id + ">" if @pre_application.approvals.second
+        approver3 = "<@" + @pre_application.approvals.third.user.slack_member_id + ">" if @pre_application.approvals.third
 
+        message = <<~"EOS"
+        新規申請があります。
+        分野：#{@pre_application.genre}
+        項目：#{@pre_application.item}
+        承認者：#{approver1} #{approver2 if approver2} #{approver3 if approver3}
+        <#{pre_application_url(@pre_application)}|ここ>にアクセスして承認してください。
+        EOS
+        notifier.ping(message)
       else
         format.html { render :new }
         format.json { render json: @pre_application.errors, status: :unprocessable_entity }
