@@ -20,6 +20,9 @@
           <%= form.hidden_field :user_id, :value => current_user.id %>
         <% when "edit" %>
           <%= @pre_application.user.name %>
+        <% else %>
+          <%= current_user.name %>
+          <%= form.hidden_field :user_id, :value => current_user.id %>
       <% end %>
     </div>
 

@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div>
-    <%= search_form_for @q do |f| %>
+    <%= search_form_for(@q, url: admin_pre_applications_path) do |f| %>
       <div class="form-inline form-group col-auto">
         <%= f.label :user_name_or_genre_or_item_or_approvals_user_name_cont, "Key Word", class: "col-sm-1 col-form-label" %>
           <%= f.search_field :user_name_or_genre_or_item_or_approvals_user_name_cont,

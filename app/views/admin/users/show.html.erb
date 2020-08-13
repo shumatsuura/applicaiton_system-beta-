@@ -1,0 +1,40 @@
+<div class ="container">
+  <h4><%= @user.name %>のページ</h4>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th colspan="4">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-3">
+                Profile
+              </div>
+              <div class="col-9 text-right">
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tr>
+        <th class="align-middle">名前:</th>
+        <td class="w-25 align-middle"><%= @user.name %></td>
+        <th class="align-middle">部門:</th>
+        <td class="w-25 align-middle"><%= @user.department %></td>
+      </tr>
+      <tr>
+        <th class="w-25">Team:</th>
+        <td class="w-25"><%= @user.team %></td>
+        <th>Office:</th>
+        <td><%= @user.office %></td>
+      </tr>
+      <tr>
+        <th>Slack ID:</th>
+        <td><%= @user.slack_member_id %></td>
+        <th>管理者:</th>
+        <td><%= @user.admin %></td>
+      </tr>
+      <tr>
+        <th>Email:</th>
+        <td><%= @user.email %></td>
+      </tr>
+    </table>
+</div>

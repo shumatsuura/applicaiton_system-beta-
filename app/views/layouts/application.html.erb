@@ -28,17 +28,19 @@
               <%= link_to "新規申請",new_pre_application_path, {class: "nav-link"} %>
             </li>
             <li class="nav-item">
-              <%= link_to "ユーザー一覧",users_path, {class: "nav-link"} %>
-            </li>
-            <li class="nav-item">
               <%= link_to "申請一覧",pre_applications_path, {class: "nav-link"} %>
             </li>
             <li class="nav-item">
               <%= link_to "承認待ち一覧",approvals_path, {class: "nav-link"} %>
             </li>
-            <li class="nav-item">
-              <%= link_to "ログイン", new_user_session_path, {class: "nav-link"} if not user_signed_in? %>
-            </li>
+            <% if user_signed_in? && current_user.admin %>
+              <li class="nav-item">
+                <%= link_to "アドミン用ユーザー一覧",admin_users_path, {class: "nav-link"} %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "アドミン用申請一覧",admin_pre_applications_path, {class: "nav-link"} %>
+              </li>
+            <% end %>
           </ul>
 
           <ul class="navbar-nav">

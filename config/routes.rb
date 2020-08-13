@@ -11,9 +11,12 @@ Rails.application.routes.draw do
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'
     }
-  resources :users
+  resources :users, only:[:index]
 
-  # namespace :admin do
+  namespace :admin do
+    resources :users
+    resources :pre_applications
+    resources :approvals
   #   resources :users do
   #     collection do
   #       get :dashboard
@@ -25,5 +28,5 @@ Rails.application.routes.draw do
   #       get :index_all
   #     end
   #   end
-  # end
+  end
 end
