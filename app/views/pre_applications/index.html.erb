@@ -67,7 +67,9 @@
           <%= pre_application.overall_approvals.first.status if pre_application.overall_approvals.first %>
         </td>
 
-        <td><%= link_to 'Show', pre_application %></td>
+        <td><%= link_to 'Show', pre_application %>
+          <%= pre_application_url(pre_application) %>
+        </td>
         <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
         <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 

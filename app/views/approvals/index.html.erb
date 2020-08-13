@@ -19,7 +19,7 @@
       <% @approvals.each do |approval| %>
         <tr>
           <td>
-              <%= link_to approval.pre_application.id, pre_application_path(approval.pre_application.id) %>
+            <%= link_to approval.pre_application.id, pre_application_path(approval.pre_application.id) %>
           </td>
           <td>
             <%= approval.pre_application.user.name %>

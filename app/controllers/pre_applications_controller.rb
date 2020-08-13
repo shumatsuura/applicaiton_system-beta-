@@ -40,6 +40,18 @@ class PreApplicationsController < ApplicationController
         @pre_application.overall_approvals.create()
         format.html { redirect_to @pre_application, notice: 'Pre application was successfully created.' }
         format.json { render :show, status: :created, location: @pre_application }
+
+        #Slackへの通知
+        notifier = Slack::Notifier.new(
+          ENV['WEBHOOK_URL'],
+          channel: '#' + ENV['CHANNEL']
+        )
+        notifier.ping "新規申請がありました。
+        承認者は<@UU5GXJ9MX>です。<#{pre_application_url(@pre_application)}|ここ>にアクセスして承認してください。
+        分野：#{@pre_application.genre},
+        項目：#{@pre_application.item}
+        "
+
       else
         format.html { render :new }
         format.json { render json: @pre_application.errors, status: :unprocessable_entity }
