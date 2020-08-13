@@ -1,0 +1,59 @@
+<div class="container mt-2">
+  <div id="error_explanation">
+    <% if @user.errors.any? %>
+    <h2><%= pluralize(@user.errors.count, "error") %>prohibited this @user from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+  <h2>Edit Account Info</h2>
+  <div class="card p-2 mb-4">
+
+  <%= form_with(model: @user, url: admin_user_path(@user), local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :department, value: "部門" %>
+        <%= f.select :department,["管理","事業推進","事業企画"],{},class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :team, value: "チーム" %>
+        <%= f.select :team,["医療","セールス","開発","マーケティング"],{},class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :office, value: "オフィス" %>
+        <%= f.select :office,["名古屋","東京"],{},class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :slack_member_id, value: "SLACK ID" %>
+        <%= f.text_field :slack_member_id, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :admin, value: "Admin権限を付与" %>
+        <%= f.check_box :admin, {selected: "true"}, "true", "false" %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  </div>
+</div>

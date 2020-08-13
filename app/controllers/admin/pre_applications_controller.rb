@@ -1,13 +1,11 @@
-class PreApplicationsController < ApplicationController
+class Admin::PreApplicationsController < ApplicationController
   before_action :set_pre_application, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
-  before_action :authenticate_editer, only: [:edit, :update, :destroy]
+  before_action :ensure_admin_user
 
-  PER = 10
+  PER = 50
 
   def index
-    @q = PreApplication.where(user_id: current_user.id).order(updated_at: "DESC").ransack(params[:q])
-    # @q = PreApplication.order(updated_at: "DESC").ransack(params[:q])
+    @q = PreApplication.order(updated_at: "DESC").ransack(params[:q])
     @pre_applications = @q.result(distinct: true).page(params[:page]).per(PER)
   end
 
@@ -68,14 +66,6 @@ class PreApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @pre_application.update(pre_application_params)
-        #添付ファイルの削除機能
-        if params[:pre_application][:attached_file_ids].present?
-          params[:pre_application][:attached_file_ids].each do |attached_file_id|
-            attached_file = @pre_application.attached_files.find(attached_file_id)
-            attached_file.purge
-          end
-        end
-
         format.html { redirect_to @pre_application, notice: 'Pre application was successfully updated.' }
         format.json { render :show, status: :ok, location: @pre_application }
       else
@@ -116,11 +106,5 @@ class PreApplicationsController < ApplicationController
         approvals_attributes: [:id, :user_id,:order, :_destroy],
         reports_attributes: [:id, :user_id, :_destroy],
         attached_files: [])
-    end
-
-    def authenticate_editer
-      if current_user != @pre_application.user
-        redirect_to pre_applications_path, notice: "権限がありません。"
-      end
     end
 end

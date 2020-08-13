@@ -1,43 +1,52 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <p>
+    <strong>申請者:</strong>
+    <%= @pre_application.user.name %>
+  </p>
 
-<p>
-  <strong>申請者:</strong>
-  <%= @pre_application.user.name %>
-</p>
+  <p>
+    <strong>Genre:</strong>
+    <%= @pre_application.genre %>
+  </p>
 
-<p>
-  <strong>Genre:</strong>
-  <%= @pre_application.genre %>
-</p>
+  <p>
+    <strong>Item:</strong>
+    <%= @pre_application.item %>
+  </p>
 
-<p>
-  <strong>Item:</strong>
-  <%= @pre_application.item %>
-</p>
+  <p>
+    <strong>Description:</strong>
+    <%= @pre_application.description %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @pre_application.description %>
-</p>
+  <p>
+    <strong>Amount:</strong>
+    <%= @pre_application.amount %>
+  </p>
+  <p>
+    <strong>添付ファイル</strong>
+    <% @pre_application.attached_files.each do |attached_file| %>
+      <%= link_to "#{attached_file.filename}", rails_blob_path(attached_file) %>
+    <% end %>
+  </p>
+  <p>
+    <h6>承認状況</h6>
+    <% @pre_application.approvals.each_with_index do |approval,i| %>
+      承認者<%= i + 1 %>
+      <%= approval.user.name %>
+      <%= approval.judge == nil ? "未承認" : approval.judge %>
+    <% end %>
+  </p>
+  <p>
+    <% if @pre_application.reports %>
+      <h6>報告先</h6>
+      <% @pre_application.reports.each_with_index do |report,i| %>
+        承認者<%= i + 1 %>
+        <%= report.user.name %>
+      <% end %>
+    <% end %>
+  </p>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @pre_application.amount %>
-</p>
-<p>
-  <strong>添付ファイル</strong>
-  <% @pre_application.attached_files.each do |attached_file| %>
-    <%= link_to "#{attached_file.filename}", rails_blob_path(attached_file) %>
-  <% end %>
-</p>
-<p>
-  <h6>承認状況</h6>
-  <% @pre_application.approvals.each_with_index do |approval,i| %>
-    承認者<%= i + 1 %>
-    <%= approval.user.name %>
-    <%= approval.judge == nil ? "未承認" : approval.judge %>
-  <% end %>
-</p>
-
-<%= link_to 'Edit', edit_pre_application_path(@pre_application) %> |
-<%= link_to 'Back', pre_applications_path %>
+  <%= link_to 'Edit', edit_pre_application_path(@pre_application) %>
+  <%= link_to 'Back', pre_applications_path %>
+</div>

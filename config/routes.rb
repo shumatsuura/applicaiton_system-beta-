@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'reports/index'
-  get 'approvals/index'
   root 'pre_applications#index'
 
   resources :pre_applications
@@ -11,6 +9,22 @@ Rails.application.routes.draw do
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'
     }
-  resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :users, only:[:index]
+
+  namespace :admin do
+    resources :users
+    resources :pre_applications
+    resources :approvals
+  #   resources :users do
+  #     collection do
+  #       get :dashboard
+  #     end
+  #   end
+  #
+  #   resources :pre_applications, only:[] do
+  #     collection do
+  #       get :index_all
+  #     end
+  #   end
+  end
 end

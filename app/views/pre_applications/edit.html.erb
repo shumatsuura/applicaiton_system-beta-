@@ -1,6 +1,8 @@
-<h1>Editing Pre Application</h1>
+<div class="container">
+  <h3>Editing Pre Application</h3>
+  <%= render 'form', pre_application: @pre_application %>
 
-<%= render 'form', pre_application: @pre_application %>
+  <%= link_to 'Show', @pre_application %> |
+  <%= link_to 'Back', pre_applications_path %>
 
-<%= link_to 'Show', @pre_application %> |
-<%= link_to 'Back', pre_applications_path %>
+</div>
