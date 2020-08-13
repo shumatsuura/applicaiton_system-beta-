@@ -68,6 +68,14 @@ class PreApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @pre_application.update(pre_application_params)
+        #添付ファイルの削除機能
+        if params[:pre_application][:attached_file_ids].present?
+          params[:pre_application][:attached_file_ids].each do |attached_file_id|
+            attached_file = @pre_application.attached_files.find(attached_file_id)
+            attached_file.purge
+          end
+        end
+
         format.html { redirect_to @pre_application, notice: 'Pre application was successfully updated.' }
         format.json { render :show, status: :ok, location: @pre_application }
       else

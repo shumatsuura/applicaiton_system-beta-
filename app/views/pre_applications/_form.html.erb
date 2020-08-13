@@ -59,6 +59,16 @@
       <%= form.file_field :attached_files, multiple: true,class:"form-control" %>
     </div>
 
+    <% if controller.action_name == "edit" && @pre_application.attached_files.attached? %>
+      <div class="form-group">
+        <%= form.label :"添付ファイルの削除" %><br>
+        <% @pre_application.attached_files.each do |attached_file| %>
+          <%= form.check_box :attached_file_ids, {:multiple => true}, attached_file.id, false %>
+          <%= attached_file.filename %> <br>
+        <% end %>
+      </div>
+    <% end %>
+
     <h5>承認者設定</h5>
     <div class="form-group approvals">
       <%= form.fields_for :approvals do |builder| %>

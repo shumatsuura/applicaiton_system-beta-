@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'reports/index'
-  get 'approvals/index'
   root 'pre_applications#index'
 
   resources :pre_applications
