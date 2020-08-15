@@ -31,6 +31,12 @@
               <%= link_to "申請一覧",pre_applications_path, {class: "nav-link"} %>
             </li>
             <li class="nav-item">
+              <%= link_to "リモートワーク申請",new_remote_work_path, {class: "nav-link"} %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "リモートワーク一覧",remote_works_path, {class: "nav-link"} %>
+            </li>
+            <li class="nav-item">
               <%= link_to "承認待ち一覧",approvals_path, {class: "nav-link"} %>
             </li>
             <% if user_signed_in? && current_user.admin %>

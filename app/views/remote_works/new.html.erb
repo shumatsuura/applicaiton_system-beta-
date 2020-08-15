@@ -1,0 +1,36 @@
+<div class="container">
+  <%= form_with(model: @remote_work, local: true) do |form| %>
+    <% if @remote_work.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@remote_work.errors.count, "error") %> prohibited this remote_work from being saved:</h2>
+
+        <ul>
+        <% @remote_work.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <h2>フルリモート申請</h2>
+    <div class="field form-group">
+      <% @remote_dates.each do |remote_date| %>
+        <%= form.check_box :remote_dates,
+         { multiple: true,
+           checked: @user.remote_works.map { |a| a.remote_date}.include?(remote_date),
+           #disabled: label[:disabled],
+           include_hidden: true },#チェックされなかった値を送るかどうか
+           checked_value = remote_date,#チェックした場合
+           unchecked_value = "unchecked" + remote_date.to_s
+           %>
+           <%= form.label :remote_dates, remote_date.to_s + "（"  + %w(日 月 火 水 木 金 土)[remote_date.wday] + "）", {value: remote_date, class: ""} %>
+           <br>
+      <% end %>
+
+    </div>
+
+    <div class="actions">
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+      <%= form.submit "申請", class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

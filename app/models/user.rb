@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :approvals
   has_many :pre_applications
   has_many :reports
+  has_many :remote_works
 end

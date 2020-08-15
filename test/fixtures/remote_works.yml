@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  remote_date: 2020-08-15
+
+two:
+  user: 
+  remote_date: 2020-08-15
