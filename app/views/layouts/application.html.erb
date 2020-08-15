@@ -24,21 +24,23 @@
             <li class="nav-item active">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <%= link_to "新規申請",new_pre_application_path, {class: "nav-link"} %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "申請一覧",pre_applications_path, {class: "nav-link"} %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "リモートワーク申請",new_remote_work_path, {class: "nav-link"} %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "リモートワーク一覧",remote_works_path, {class: "nav-link"} %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "承認待ち一覧",approvals_path, {class: "nav-link"} %>
-            </li>
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "新規申請",new_pre_application_path, {class: "nav-link"} %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "申請一覧",pre_applications_path, {class: "nav-link"} %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "リモートワーク申請",new_remote_work_path, {class: "nav-link"} %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "リモートワーク一覧",remote_works_path, {class: "nav-link"} %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "承認待ち一覧",approvals_path, {class: "nav-link"} %>
+              </li>
+            <% end %>
             <% if user_signed_in? && current_user.admin %>
               <li class="nav-item">
                 <%= link_to "アドミン用ユーザー一覧",admin_users_path, {class: "nav-link"} %>
@@ -63,7 +65,13 @@
         </div>
       </nav>
     </header>
-    <p id="notice"><%= notice %></p>
+    <div class="container-fluid p-0">
+      <% flash.each do |key, value| %>
+      <% key = "info" if key == "notice" %>
+      <% key = "danger"  if key == "alert" %>
+      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>

@@ -1,6 +1,6 @@
 class PreApplicationsController < ApplicationController
   before_action :set_pre_application, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate_user!,only: [:new,:create,:index,:show,:edit,:update,:destroy]
   before_action :authenticate_editer, only: [:edit, :update, :destroy]
 
   PER = 10
