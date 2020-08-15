@@ -1,0 +1,46 @@
+<div class="container">
+
+<h3>フルリモート申請一覧</h3>
+  <div>
+    <%= search_form_for @q do |f| %>
+      <div class="form-inline form-group col-auto">
+        <%= f.label :user_name_or_user_office_or_user_department_cont, "Key Word", class: "col-form-label mr-2" %>
+          <%= f.search_field :user_name_or_user_office_or_user_department_cont,
+          {class: "form-control", placeholder: "Search"} %>
+          <%= f.label :remote_date_gteq, "日付検索", class: "col-form-label mx-2" %>
+          <%= f.date_field :remote_date_gteq,class: "form-control" %>
+          〜
+          <%= f.date_field :remote_date_lteq,class: "form-control" %>
+          <%= f.submit "Search", class: "btn btn-success ml-2" %>
+      </div>
+      <div class="form-group text-right">
+      </div>
+    <% end %>
+  </div>
+  <%= paginate @remote_works %>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>申請者</th>
+        <th>部門</th>
+        <th>チーム</th>
+        <th>オフィス</th>
+        <th>フルリモート申請日</th>
+        <th>更新</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @remote_works.each do |remote_work| %>
+      <tr>
+        <td><%= remote_work.user.name %></td>
+        <td><%= remote_work.user.department %></td>
+        <td><%= remote_work.user.team %></td>
+        <td><%= remote_work.user.office %></td>
+        <td><%= remote_work.remote_date.to_s + "（"  + %w(日 月 火 水 木 金 土)[remote_work.remote_date.wday] + "）" %></td>
+        <td><%= remote_work.updated_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+      </tr>
+      <% end %>
+    </tbody>
+</table>
+
+</div>

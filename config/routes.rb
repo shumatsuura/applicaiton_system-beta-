@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :pre_applications
   resources :approvals
   resources :reports
+  resources :remote_works
 
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
