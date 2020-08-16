@@ -1,5 +1,6 @@
 class Admin::PreApplicationsController < ApplicationController
   before_action :set_pre_application, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
   before_action :ensure_admin_user
 
   PER = 50
@@ -10,12 +11,6 @@ class Admin::PreApplicationsController < ApplicationController
   end
 
   def show
-  end
-
-  def new
-    @pre_application = PreApplication.new
-    @pre_application.approvals.build
-    @pre_application.reports.build
   end
 
   def edit
@@ -30,43 +25,10 @@ class Admin::PreApplicationsController < ApplicationController
     end
   end
 
-  def create
-    @pre_application = PreApplication.new(pre_application_params)
-
-    respond_to do |format|
-      if @pre_application.save
-        @pre_application.overall_approvals.create()
-        format.html { redirect_to @pre_application, notice: 'Pre application was successfully created.' }
-        format.json { render :show, status: :created, location: @pre_application }
-
-        #Slackへの通知
-        notifier = Slack::Notifier.new(
-          ENV['WEBHOOK_URL'],
-          channel: '#' + ENV['CHANNEL']
-        )
-        approver1 = "<@" + @pre_application.approvals.first.user.slack_member_id + ">" if @pre_application.approvals.first
-        approver2 = "<@" + @pre_application.approvals.second.user.slack_member_id + ">" if @pre_application.approvals.second
-        approver3 = "<@" + @pre_application.approvals.third.user.slack_member_id + ">" if @pre_application.approvals.third
-
-        message = <<~"EOS"
-        新規申請があります。
-        分野：#{@pre_application.genre}
-        項目：#{@pre_application.item}
-        承認者：#{approver1} #{approver2 if approver2} #{approver3 if approver3}
-        <#{pre_application_url(@pre_application)}|ここ>にアクセスして承認してください。
-        EOS
-        notifier.ping(message)
-      else
-        format.html { render :new }
-        format.json { render json: @pre_application.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def update
     respond_to do |format|
       if @pre_application.update(pre_application_params)
-        format.html { redirect_to @pre_application, notice: 'Pre application was successfully updated.' }
+        format.html { redirect_to admin_pre_application_path(@pre_application), notice: 'Pre application was successfully updated.' }
         format.json { render :show, status: :ok, location: @pre_application }
       else
         format.html { render :edit }

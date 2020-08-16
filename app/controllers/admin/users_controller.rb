@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only:[:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
   before_action :ensure_admin_user
 
   PER = 30

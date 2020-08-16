@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <p>
     <strong>申請者:</strong>
     <%= @pre_application.user.name %>
@@ -30,19 +30,18 @@
     <% end %>
   </p>
   <p>
-    <strong>承認状況</strong><br>
+    <h6>承認状況</h6>
     <% @pre_application.approvals.each_with_index do |approval,i| %>
       承認者<%= i + 1 %>
       <%= approval.user.name %>
       <%= approval.judge == nil ? "未承認" : approval.judge %>
-      <%= link_to "承認する", approval_path(approval,approval:{judge: true}),method: :put if (approval.user == current_user) && (approval.judge == nil) %>
     <% end %>
   </p>
   <p>
     <% if @pre_application.reports %>
-      <strong>報告先</strong><br>
+      <h6>報告先</h6>
       <% @pre_application.reports.each_with_index do |report,i| %>
-        報告先<%= i + 1 %>:
+        承認者<%= i + 1 %>
         <%= report.user.name %>
       <% end %>
     <% end %>

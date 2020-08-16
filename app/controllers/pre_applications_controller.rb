@@ -1,7 +1,8 @@
 class PreApplicationsController < ApplicationController
   before_action :set_pre_application, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate_user!,only: [:new,:create,:index,:show,:edit,:update,:destroy]
   before_action :authenticate_editer, only: [:edit, :update, :destroy]
+  before_action :authenticate_viewer, only: [:show]
 
   PER = 10
 
@@ -37,7 +38,7 @@ class PreApplicationsController < ApplicationController
 
     respond_to do |format|
       if @pre_application.save
-        @pre_application.overall_approvals.create()
+        @pre_application.create_overall_approval
         format.html { redirect_to @pre_application, notice: 'Pre application was successfully created.' }
         format.json { render :show, status: :created, location: @pre_application }
 
@@ -120,7 +121,16 @@ class PreApplicationsController < ApplicationController
 
     def authenticate_editer
       if current_user != @pre_application.user
-        redirect_to pre_applications_path, notice: "権限がありません。"
+        redirect_to pre_applications_path, notice: "編集権限がありません。"
+      end
+    end
+
+    def authenticate_viewer
+      approver = @pre_application.approvals.map{ |approval| approval.user_id }.include?(current_user.id)
+      reported_person = @pre_application.reports.map{ |report| report.user_id }.include?(current_user.id)
+      if (current_user == @pre_application.user) or approver or reported_person
+      else
+        redirect_to pre_applications_path, notice: "閲覧権限がありません。"
       end
     end
 end

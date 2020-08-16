@@ -37,7 +37,7 @@
     <tbody>
       <% @pre_applications.each do |pre_application| %>
         <tr>
-          <td><%= link_to pre_application.id, pre_application_path(pre_application) %></td>
+          <td><%= link_to pre_application.id, admin_pre_application_path(pre_application) %></td>
           <td><%= pre_application.user.name %></td>
           <td><%= pre_application.genre %></td>
           <td><%= pre_application.item %></td>
@@ -64,12 +64,12 @@
           <% end %>
 
           <td>
-            <%= pre_application.overall_approvals.first.status if pre_application.overall_approvals.first %>
+            <%= pre_application.overall_approval.status if pre_application.overall_approval %>
           </td>
 
-          <td><%= link_to 'Show', pre_application %></td>
-          <td><%= link_to 'Edit', edit_pre_application_path(pre_application) %></td>
-          <td><%= link_to 'Destroy', pre_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Show', admin_pre_application_path(pre_application) %></td>
+          <td><%= link_to 'Edit', edit_admin_pre_application_path(pre_application) %></td>
+          <td><%= link_to 'Destroy', admin_pre_application_path(pre_application), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
         </tr>
       <% end %>

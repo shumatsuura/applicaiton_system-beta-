@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'pre_applications#index'
+  root 'pre_applications#landing'
 
   resources :pre_applications
   resources :approvals
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
-    resources :pre_applications
+    resources :pre_applications, only:[:show,:index,:update,:edit,:destroy]
     resources :approvals
   #   resources :users do
   #     collection do
