@@ -35,7 +35,12 @@
           </td>
           <td>
             <%= link_to "承認する", approval_path(approval,approval:{judge: true}),method: :put if (approval.user == current_user) && (approval.judge == nil) %>
-            <%= approval.judge if approval.judge != nil %>
+            
+            <% if approval.judge == true %>
+            承認済
+            <% elsif approval.judge == false %>
+            否認
+            <% end %>
           </td>
           <td>
             <%= link_to "否認する", approval_path(approval,approval:{judge: false}),method: :put if approval.user == current_user && (approval.judge == nil) %>
@@ -46,7 +51,13 @@
                 <%= approver.user.name %>
               </td>
               <td>
-                <%= approver.judge == nil ? "未承認" : approver.judge %>
+                <% if approver.judge == nil %>
+                承認待ち
+                <% elsif approver.judge == true %>
+                承認済
+                <% else %>
+                否認
+                <% end %>
               </td>
             <% end %>
           <% end %>

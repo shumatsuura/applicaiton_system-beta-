@@ -1,5 +1,6 @@
 class RemoteWorksController < ApplicationController
   before_action :set_remote_work, only:[:show,:edit,:update,:destroy]
+  before_action :authenticate_user!
 
   PER = 50
 
@@ -26,7 +27,7 @@ class RemoteWorksController < ApplicationController
           remote_dates.delete(s)
       end
     end
-    
+
     remote_dates.each do |t|
       #チェックした日付が既に申請済みの場合、処理なし
       if @user.remote_works.map { |a| a.remote_date.to_s}.include?(t)

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
-    resources :pre_applications
+    resources :pre_applications, only:[:show,:index,:update,:edit,:destroy]
     resources :approvals
   #   resources :users do
   #     collection do
